@@ -179,6 +179,9 @@
         "watch": "npm run compile -- --watch",
         "typecheck": "tsc --noEmit",
         "lint": "eslint src --ext ts",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
         "vscode:prepublish": "npm run compile",
         "package": "npx @vscode/vsce package --allow-missing-repository"
     },
@@ -191,9 +194,11 @@
         "@types/ws": "^8.5.10",
         "@typescript-eslint/eslint-plugin": "^6.13.0",
         "@typescript-eslint/parser": "^6.13.0",
+        "@vitest/coverage-v8": "^4.0.16",
         "@vscode/vsce": "^2.22.0",
         "esbuild": "^0.27.1",
         "eslint": "^8.55.0",
-        "typescript": "^5.3.0"
+        "typescript": "^5.3.0",
+        "vitest": "^4.0.16"
     }
 }
