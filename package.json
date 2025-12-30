@@ -1,0 +1,196 @@
+{
+    "name": "yoke-antigravity",
+    "displayName": "Yoke AntiGravity",
+    "description": "Transform Antigravity into a fully autonomous AI development environment",
+    "version": "2.11.0",
+    "publisher": "ai-dev-2024",
+    "license": "MIT",
+    "icon": "media/icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ai-dev-2024/yoke-antigravity"
+    },
+    "bugs": {
+        "url": "https://github.com/ai-dev-2024/yoke-antigravity/issues"
+    },
+    "homepage": "https://ko-fi.com/ai_dev_2024",
+    "sponsor": {
+        "url": "https://ko-fi.com/ai_dev_2024"
+    },
+    "categories": [
+        "Machine Learning",
+        "Other"
+    ],
+    "keywords": [
+        "ai",
+        "antigravity",
+        "autonomous",
+        "auto-all",
+        "yoke",
+        "gemini",
+        "claude",
+        "windsurf",
+        "codeium"
+    ],
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "dist/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "yoke.toggleAutoAll",
+                "title": "Yoke: Toggle Auto-All Mode"
+            },
+            {
+                "command": "yoke.toggleMultiTab",
+                "title": "Yoke: Toggle Multi-Tab Mode"
+            },
+            {
+                "command": "yoke.toggleYokeMode",
+                "title": "Yoke: Toggle Autonomous Loop"
+            },
+            {
+                "command": "yoke.openSettings",
+                "title": "Yoke: Open Dashboard"
+            }
+        ],
+        "configuration": {
+            "title": "Yoke AntiGravity",
+            "properties": {
+                "yoke.autoAllEnabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Auto-accept file edits and commands"
+                },
+                "yoke.multiTabEnabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Work across all conversation tabs"
+                },
+                "yoke.yokeModeEnabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable autonomous loop with model selection"
+                },
+                "yoke.autoSwitchModels": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Automatically switch models based on task type"
+                },
+                "yoke.autoGitCommit": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Auto-commit progress every 10 loops"
+                },
+                "yoke.preferredModelForReasoning": {
+                    "type": "string",
+                    "default": "claude-opus-4.5-thinking",
+                    "enum": [
+                        "claude-opus-4.5-thinking",
+                        "claude-sonnet-4.5-thinking",
+                        "claude-sonnet-4.5"
+                    ],
+                    "description": "Model for complex reasoning tasks"
+                },
+                "yoke.preferredModelForFrontend": {
+                    "type": "string",
+                    "default": "gemini-3-pro-high",
+                    "enum": [
+                        "gemini-3-pro-high",
+                        "gemini-3-pro-low",
+                        "gemini-3-flash"
+                    ],
+                    "description": "Model for frontend/UI tasks"
+                },
+                "yoke.preferredModelForQuick": {
+                    "type": "string",
+                    "default": "gemini-3-flash",
+                    "enum": [
+                        "gemini-3-flash",
+                        "gemini-3-pro-low",
+                        "gpt-oss-120b"
+                    ],
+                    "description": "Model for quick tasks"
+                },
+                "yoke.loopInterval": {
+                    "type": "number",
+                    "default": 30,
+                    "minimum": 10,
+                    "maximum": 120,
+                    "description": "Seconds between autonomous loop iterations"
+                },
+                "yoke.maxLoopsPerSession": {
+                    "type": "number",
+                    "default": 100,
+                    "minimum": 1,
+                    "maximum": 1000,
+                    "description": "Maximum loops before pausing"
+                },
+                "yoke.pollFrequency": {
+                    "type": "number",
+                    "default": 1000,
+                    "minimum": 500,
+                    "maximum": 5000,
+                    "description": "Auto-All polling frequency in ms"
+                },
+                "yoke.bannedCommands": {
+                    "type": "array",
+                    "default": [
+                        "rm -rf /",
+                        "rm -rf ~",
+                        "format c:",
+                        "del /f /s /q"
+                    ],
+                    "description": "Commands to block from auto-execution"
+                },
+                "yoke.maxCallsPerHour": {
+                    "type": "number",
+                    "default": 100,
+                    "minimum": 10,
+                    "maximum": 500,
+                    "description": "Maximum API calls per hour (rate limiting)"
+                },
+                "yoke.executionTimeout": {
+                    "type": "number",
+                    "default": 15,
+                    "minimum": 1,
+                    "maximum": 60,
+                    "description": "Minutes before timeout per loop execution"
+                },
+                "yoke.maxConsecutiveTestLoops": {
+                    "type": "number",
+                    "default": 3,
+                    "minimum": 1,
+                    "maximum": 10,
+                    "description": "Exit after this many consecutive test-only loops"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "compile": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --format=cjs --sourcemap",
+        "watch": "npm run compile -- --watch",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint src --ext ts",
+        "vscode:prepublish": "npm run compile",
+        "package": "npx @vscode/vsce package --allow-missing-repository"
+    },
+    "dependencies": {
+        "ws": "^8.13.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.0",
+        "@types/vscode": "^1.75.0",
+        "@types/ws": "^8.5.10",
+        "@typescript-eslint/eslint-plugin": "^6.13.0",
+        "@typescript-eslint/parser": "^6.13.0",
+        "@vscode/vsce": "^2.22.0",
+        "esbuild": "^0.27.1",
+        "eslint": "^8.55.0",
+        "typescript": "^5.3.0"
+    }
+}
