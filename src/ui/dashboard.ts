@@ -18,6 +18,14 @@ export interface DashboardState {
     yokeModeEnabled: boolean;
     autoSwitchModels: boolean;
     autoGitCommit: boolean;
+    // v3.0 features
+    mcpEnabled: boolean;
+    memoryEnabled: boolean;
+    codeReviewEnabled: boolean;
+    voiceControlEnabled: boolean;
+    multiAgentEnabled: boolean;
+    notificationsEnabled: boolean;
+    autoTestGeneration: boolean;
     loopCount: number;
     sessionStats: SessionStats;
     duration: number;
@@ -214,6 +222,17 @@ export class DashboardPanel {
             ${this.generateToggleRow('AI Autonomous Mode', 'Let AI run continuously: it picks the best model, recovers when stuck, uses @web research, and keeps working until your project is done', 'yokeMode', this.state.yokeModeEnabled)}
             ${this.generateToggleRow('Smart Model Switching', 'Automatically uses Claude for complex problems, Gemini for UI work, and Flash for quick tasks', 'autoSwitchModels', this.state.autoSwitchModels)}
             ${this.generateToggleRow('Auto Git Commit', 'Saves your progress to Git every 10 loops - never lose work', 'autoGitCommit', this.state.autoGitCommit)}
+        </div>
+        
+        <div class="section">
+            <h2>🚀 v3.0 Advanced Features</h2>
+            ${this.generateToggleRow('MCP Server', 'Expose AI-callable tools for file ops, terminal commands, git, and diagnostics', 'mcpEnabled', this.state.mcpEnabled)}
+            ${this.generateToggleRow('Session Memory', 'Persistent context tracking across sessions with semantic search', 'memoryEnabled', this.state.memoryEnabled)}
+            ${this.generateToggleRow('Code Review', 'Automatic security scanning (SQL injection, XSS, secrets) with VS Code diagnostics', 'codeReviewEnabled', this.state.codeReviewEnabled)}
+            ${this.generateToggleRow('Voice Control', 'Natural language voice commands - say "Yoke start autonomous"', 'voiceControlEnabled', this.state.voiceControlEnabled)}
+            ${this.generateToggleRow('Multi-Agent', 'Spawn specialized agents (Researcher, Implementer, Reviewer, Tester) for parallel work', 'multiAgentEnabled', this.state.multiAgentEnabled)}
+            ${this.generateToggleRow('Notifications', 'Slack/Discord/webhook notifications and daily summaries', 'notificationsEnabled', this.state.notificationsEnabled)}
+            ${this.generateToggleRow('Auto Test Gen', 'Automatically generate unit tests for new code (Vitest/Jest/Mocha)', 'autoTestGeneration', this.state.autoTestGeneration)}
         </div>
         
         <div class="section">
