@@ -217,6 +217,10 @@ export class DashboardPanel {
         
         <div class="section">
             <h2>${ICONS.toggles} Features</h2>
+            <div class="enable-all-row">
+                <button class="btn btn-enable-all" onclick="enableAll()">🚀 Enable All</button>
+                <button class="btn btn-secondary" onclick="disableAll()">⏸️ Disable All</button>
+            </div>
             ${this.generateToggleRow('Auto-All Mode', 'Automatically accept all file changes and terminal commands - no more clicking Accept buttons', 'autoAll', this.state.autoAllEnabled)}
             ${this.generateToggleRow('Multi-Tab Mode', 'Work across all your open Antigravity conversations simultaneously', 'multiTab', this.state.multiTabEnabled)}
             ${this.generateToggleRow('AI Autonomous Mode', 'Let AI run continuously: it picks the best model, recovers when stuck, uses @web research, and keeps working until your project is done', 'yokeMode', this.state.yokeModeEnabled)}
@@ -306,6 +310,22 @@ export class DashboardPanel {
             value = Math.max(min, Math.min(max, value));
             input.value = value;
             autoSave(id, value);
+        }
+        
+        // Enable All Features
+        function enableAll() {
+            const features = ['autoAll', 'multiTab', 'yokeMode', 'autoSwitchModels', 'autoGitCommit', 
+                'mcpEnabled', 'memoryEnabled', 'codeReviewEnabled', 'voiceControlEnabled', 
+                'multiAgentEnabled', 'notificationsEnabled', 'autoTestGeneration'];
+            features.forEach(f => toggleFeature(f, true));
+        }
+        
+        // Disable All Features
+        function disableAll() {
+            const features = ['autoAll', 'multiTab', 'yokeMode', 'autoSwitchModels', 'autoGitCommit', 
+                'mcpEnabled', 'memoryEnabled', 'codeReviewEnabled', 'voiceControlEnabled', 
+                'multiAgentEnabled', 'notificationsEnabled', 'autoTestGeneration'];
+            features.forEach(f => toggleFeature(f, false));
         }
     </script>
 </body>

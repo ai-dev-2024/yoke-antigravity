@@ -465,6 +465,21 @@ select:focus {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Enable All Row */
+.enable-all-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--separator);
+}
+
+.btn-enable-all {
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    color: #000;
+    flex: 1;
+}
+
 /* Footer - Fixed at bottom */
 .footer {
     position: fixed;
