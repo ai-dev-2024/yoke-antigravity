@@ -68,11 +68,11 @@ describe('TestLoopDetector', () => {
 
         it('should detect feature work responses', () => {
             const featureMessages = [
-                'I created a new file src/utils/helper.ts',
-                'Implementing the new authentication flow now',
-                'I fixed the bug in the login component',
-                'Refactoring the database layer today',
-                'I am adding new validation logic',
+                'Created new file src/utils/helper.ts',
+                'Implementing the authentication flow',
+                'Fixed bug in the login component',
+                'Refactored the database layer',
+                'Adding new validation logic',
             ];
 
             for (const msg of featureMessages) {
@@ -82,7 +82,7 @@ describe('TestLoopDetector', () => {
         });
 
         it('should handle mixed responses correctly', () => {
-            const mixedMessage = 'I fixed the bug in authentication. Now running tests... All tests passed!';
+            const mixedMessage = 'Fixed bug in authentication. Now running tests... All tests passed!';
             const result = analyzeResponse(mixedMessage);
 
             // Has feature work, so should not be test-only

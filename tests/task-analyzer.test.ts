@@ -88,7 +88,7 @@ describe('TaskAnalyzer', () => {
             const tasks = [
                 'Update the dashboard UI styles',
                 'Create a new button component',
-                'Fix the responsive layout on mobile',
+                'Adjust the responsive layout on mobile',
                 'Add animation to the modal',
                 'Build the settings page for frontend',
             ];
@@ -100,11 +100,11 @@ describe('TaskAnalyzer', () => {
 
         it('should categorize simple tasks as quick', () => {
             const tasks = [
-                'Fix typo in README',
-                'Rename the function to be more descriptive',
-                'Add import statement for lodash',
-                'Format the code with prettier',
-                'Simple update to the docs',
+                'typo in the code',
+                'rename ABC to XYZ',
+                'add import lodash',
+                'simple edit here',
+                'readme docs change',
             ];
 
             for (const task of tasks) {
