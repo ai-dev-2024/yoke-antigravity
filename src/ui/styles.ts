@@ -315,7 +315,7 @@ body {
 .setting-row:last-child { border-bottom: none; }
 .setting-row label { font-size: 13px; color: var(--text-primary); flex-shrink: 0; }
 
-select, input[type="number"] {
+select {
     background: rgba(20, 20, 25, 0.95);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
@@ -327,13 +327,89 @@ select, input[type="number"] {
     max-width: 200px;
 }
 
+/* Custom Number Input with Increment/Decrement Buttons */
+.number-input-container {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Slight gap for separation */
+    background: transparent;
+    border: none;
+    height: 36px;
+}
+
+.number-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(40, 40, 50, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.number-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.number-btn:active {
+    transform: translateY(0);
+}
+
+.number-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5; /* Bolder icons */
+}
+
+.number-input {
+    width: 60px;
+    text-align: center;
+    background: rgba(20, 20, 25, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0 4px;
+    height: 36px;
+    -moz-appearance: textfield;
+    appearance: textfield; /* Standard property */
+    font-family: var(--font-family);
+    transition: all 0.2s;
+}
+
+/* Strictly hide native spinners */
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    display: none; /* Just in case */
+}
+
+.number-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(30, 30, 36, 0.9);
+    box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+}
+
 select option {
     background: rgb(20, 20, 25);
     color: var(--text-primary);
     padding: 8px;
 }
 
-select:focus, input:focus {
+select:focus {
     outline: none;
     border-color: var(--accent);
 }

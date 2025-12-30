@@ -1,8 +1,8 @@
 {
     "name": "yoke-antigravity",
     "displayName": "Yoke AntiGravity",
-    "description": "Transform Antigravity into a fully autonomous AI development environment",
-    "version": "2.11.0",
+    "description": "Auto-accept file edits and terminal commands in Antigravity. Zero-click AI coding with Auto-All, Multi-Tab, and Autonomous Mode.",
+    "version": "2.12.0",
     "publisher": "ai-dev-2024",
     "license": "MIT",
     "icon": "media/icon.png",
@@ -13,7 +13,7 @@
     "bugs": {
         "url": "https://github.com/ai-dev-2024/yoke-antigravity/issues"
     },
-    "homepage": "https://ko-fi.com/ai_dev_2024",
+    "homepage": "https://github.com/ai-dev-2024/yoke-antigravity",
     "sponsor": {
         "url": "https://ko-fi.com/ai_dev_2024"
     },
@@ -25,12 +25,15 @@
         "ai",
         "antigravity",
         "autonomous",
+        "auto-accept",
         "auto-all",
         "yoke",
         "gemini",
         "claude",
+        "cursor",
         "windsurf",
-        "codeium"
+        "codeium",
+        "automation"
     ],
     "engines": {
         "vscode": "^1.75.0"

@@ -3,11 +3,13 @@
 
   # Yoke AntiGravity
 
-  **Transform Antigravity into a fully autonomous, highly intelligent AI development environment.**
+  **Transform Antigravity into a fully autonomous AI development environment.**
 
-  [![Version](https://img.shields.io/visual-studio-marketplace/v/ai-dev-2024.yoke-antigravity?style=flat-square&color=007acc)](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity)
-  [![Installs](https://img.shields.io/visual-studio-marketplace/i/ai-dev-2024.yoke-antigravity?style=flat-square&color=success)](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity)
-  [![Rating](https://img.shields.io/visual-studio-marketplace/r/ai-dev-2024.yoke-antigravity?style=flat-square&color=orange)](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity)
+  Stop clicking "Accept" – let AI code for you while you focus on what matters.
+
+  [![VS Marketplace](https://img.shields.io/visual-studio-marketplace/v/ai-dev-2024.yoke-antigravity?style=flat-square&label=VS%20Marketplace&color=007acc)](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity)
+  [![Open VSX](https://img.shields.io/open-vsx/v/ai-dev-2024/yoke-antigravity?style=flat-square&label=Open%20VSX&color=success)](https://open-vsx.org/extension/ai-dev-2024/yoke-antigravity)
+  [![Installs](https://img.shields.io/visual-studio-marketplace/i/ai-dev-2024.yoke-antigravity?style=flat-square&color=blueviolet)](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity)
   [![GitHub Stars](https://img.shields.io/github/stars/ai-dev-2024/yoke-antigravity?style=flat-square&logo=github)](https://github.com/ai-dev-2024/yoke-antigravity/stargazers)
   [![License](https://img.shields.io/github/license/ai-dev-2024/yoke-antigravity?style=flat-square&color=blue)](LICENSE)
 
@@ -16,9 +18,26 @@
 
 ---
 
+## 📸 Dashboard Preview
+
+<div align="center">
+  <img src="media/dashboard-screenshot.png" alt="Yoke Dashboard" width="600" />
+  <p><em>Sleek, modern dashboard for controlling all autonomous features</em></p>
+</div>
+
+---
+
 ## 🚀 Overview
 
-Yoke Antigravity connects directly to the Antigravity editor's internal systems, unlocking true autonomy. By bridging the gap between the editor's capabilities and AI models, Yoke enables features like **Auto-All** (zero-click acceptance), **Multi-Tab** (parallel workflows), and the upcoming **Autonomous Loop** for self-directed development.
+Yoke Antigravity connects directly to the Antigravity editor's internal systems, unlocking true autonomy. By bridging the gap between the editor's capabilities and AI models, Yoke enables features like **Auto-All** (zero-click acceptance), **Multi-Tab** (parallel workflows), and the **Autonomous Loop** for self-directed development.
+
+### 🔗 Install Now
+
+| Platform | Link |
+|----------|------|
+| **VS Code Marketplace** | [Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity) |
+| **Open VSX** | [Install from Open VSX](https://open-vsx.org/extension/ai-dev-2024/yoke-antigravity) |
+| **GitHub Releases** | [Download VSIX](https://github.com/ai-dev-2024/yoke-antigravity/releases) |
 
 ---
 
@@ -36,7 +55,7 @@ Yoke Antigravity connects directly to the Antigravity editor's internal systems,
 - 📊 Progress tracking per conversation
 - 🖥️ Visual overlay in background mode
 
-### ⚡ Yoke Autonomous Mode (Beta)
+### ⚡ AI Autonomous Mode
 **The future of AI coding.** Continuous AI development loop with intelligent model selection.
 - 🤖 **Reasoning** with Claude Opus 4.5
 - 🎨 **Frontend** with Gemini 3 Pro
@@ -50,7 +69,10 @@ Yoke Antigravity connects directly to the Antigravity editor's internal systems,
 
 ## 📦 Installation
 
-### From VSIX (Recommended)
+### From VS Code Marketplace (Recommended)
+Search for **"Yoke AntiGravity"** in VS Code Extensions, or [click here to install](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity).
+
+### From VSIX
 1. Download the latest `.vsix` from [Releases](https://github.com/ai-dev-2024/yoke-antigravity/releases)
 2. In Antigravity: `Cmd/Ctrl+Shift+P` → "Extensions: Install from VSIX..."
 3. Select the downloaded file
@@ -63,6 +85,7 @@ npm install
 npm run compile
 npm run package
 ```
+
 
 ---
 

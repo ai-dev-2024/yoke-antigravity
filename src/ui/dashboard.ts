@@ -269,6 +269,25 @@ export class DashboardPanel {
                 silent: true
             });
         }
+        
+        // Adjust number input value
+        function adjustNumber(id, delta, min, max) {
+            const input = document.getElementById(id);
+            let value = parseInt(input.value) || min;
+            value = Math.max(min, Math.min(max, value + delta));
+            input.value = value;
+            
+            autoSave(id, value);
+        }
+        
+        // Clamp value to min/max bounds
+        function clampValue(id, min, max) {
+            const input = document.getElementById(id);
+            let value = parseInt(input.value) || min;
+            value = Math.max(min, Math.min(max, value));
+            input.value = value;
+            autoSave(id, value);
+        }
     </script>
 </body>
 </html>`;
@@ -292,7 +311,24 @@ export class DashboardPanel {
     }
 
     private generateNumberInput(label: string, id: string, value: number, min: number, max: number): string {
-        return `<div class="setting-row"><label>${label}</label><input type="number" id="${id}" value="${value}" min="${min}" max="${max}" onchange="autoSave('${id}', parseInt(this.value))"></div>`;
+        const minusIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+        const plusIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+
+        return `
+        <div class="setting-row">
+            <label>${label}</label>
+            <div class="number-input-container">
+                <button type="button" class="number-btn decrement" onclick="adjustNumber('${id}', -1, ${min}, ${max})" title="Decrease">
+                    ${minusIcon}
+                </button>
+                <input type="number" class="number-input" id="${id}" value="${value}" min="${min}" max="${max}" 
+                    onchange="autoSave('${id}', parseInt(this.value))"
+                    onblur="clampValue('${id}', ${min}, ${max})">
+                <button type="button" class="number-btn increment" onclick="adjustNumber('${id}', 1, ${min}, ${max})" title="Increase">
+                    ${plusIcon}
+                </button>
+            </div>
+        </div>`;
     }
 
     /**
