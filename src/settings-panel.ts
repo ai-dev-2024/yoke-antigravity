@@ -4,7 +4,6 @@
  */
 
 import * as vscode from 'vscode';
-import { MODELS } from './model-selector';
 
 export class SettingsPanel {
     public static currentPanel: SettingsPanel | undefined;

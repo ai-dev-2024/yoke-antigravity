@@ -70,6 +70,9 @@ export interface YokeConfig {
     preferredModelForReasoning: ModelIdType;
     preferredModelForFrontend: ModelIdType;
     preferredModelForQuick: ModelIdType;
+    executionTimeout: number;
+    maxCallsPerHour: number;
+    maxConsecutiveTestLoops: number;
 }
 
 export const DEFAULT_CONFIG: YokeConfig = {
@@ -85,6 +88,9 @@ export const DEFAULT_CONFIG: YokeConfig = {
     preferredModelForReasoning: ModelId.CLAUDE_OPUS_THINKING,
     preferredModelForFrontend: ModelId.GEMINI_PRO_HIGH,
     preferredModelForQuick: ModelId.GEMINI_FLASH,
+    executionTimeout: 15,
+    maxCallsPerHour: 100,
+    maxConsecutiveTestLoops: 3,
 };
 
 // ============ Usage Data ============

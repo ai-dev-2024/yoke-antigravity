@@ -35,7 +35,7 @@ export class ModelSelector {
             reasoning: this.generateReasoning(taskType, modelDisplayName),
         };
 
-        log.info('Selected model', selection);
+        log.info(`Selected model: ${modelId} (${selection.reasoning})`);
         return selection;
     }
 

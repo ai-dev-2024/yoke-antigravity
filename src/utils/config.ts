@@ -46,6 +46,9 @@ class ConfigurationManager {
             preferredModelForReasoning: this.get('preferredModelForReasoning'),
             preferredModelForFrontend: this.get('preferredModelForFrontend'),
             preferredModelForQuick: this.get('preferredModelForQuick'),
+            executionTimeout: this.get('executionTimeout'),
+            maxCallsPerHour: this.get('maxCallsPerHour'),
+            maxConsecutiveTestLoops: this.get('maxConsecutiveTestLoops'),
         };
     }
 
