@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.14.0] - 2024-12-30
+
+### Added
+- **Dashboard Screenshot**: Updated dashboard preview for marketplace and GitHub
+- **Verified Release**: Full functionality verification of all autonomous features
+
+### Fixed
+- **CRITICAL: Auto-All Not Working**: Fixed path resolution bug in `cdp-handler.js` that prevented the auto-accept script from loading. The `getComposedScript()` function was using incorrect relative path `../main_scripts/full_cdp_script.js` instead of just `full_cdp_script.js` in the same directory.
+
+### Verified Working
+- ✅ AI Autonomous Mode with intelligent model selection
+- ✅ Test-loop detector for feature completeness detection
+- ✅ Circuit breaker and recovery strategies
+- ✅ Rate limiting and API quota management
+- ✅ Auto-All and Multi-Tab modes
+
+### Technical
+- Code quality improvements and cleanup
+- Build verification with TypeScript strict mode
+
+---
+
 ## [2.11.0] - 2024-12-30
 
 ### Added
