@@ -7,9 +7,7 @@
 
   Stop clicking "Accept" – let AI code for you while you focus on what matters.
 
-  [![VS Marketplace](https://img.shields.io/visual-studio-marketplace/v/ai-dev-2024.yoke-antigravity?style=flat-square&label=VS%20Marketplace&color=007acc)](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity)
   [![Open VSX](https://img.shields.io/open-vsx/v/ai-dev-2024/yoke-antigravity?style=flat-square&label=Open%20VSX&color=success)](https://open-vsx.org/extension/ai-dev-2024/yoke-antigravity)
-  [![Installs](https://img.shields.io/visual-studio-marketplace/i/ai-dev-2024.yoke-antigravity?style=flat-square&color=blueviolet)](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity)
   [![GitHub Stars](https://img.shields.io/github/stars/ai-dev-2024/yoke-antigravity?style=flat-square&logo=github)](https://github.com/ai-dev-2024/yoke-antigravity/stargazers)
   [![License](https://img.shields.io/github/license/ai-dev-2024/yoke-antigravity?style=flat-square&color=blue)](LICENSE)
 
@@ -35,7 +33,6 @@ Yoke Antigravity connects directly to the Antigravity editor's internal systems,
 
 | Platform | Link |
 |----------|------|
-| **VS Code Marketplace** | [Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity) |
 | **Open VSX** | [Install from Open VSX](https://open-vsx.org/extension/ai-dev-2024/yoke-antigravity) |
 | **GitHub Releases** | [Download VSIX](https://github.com/ai-dev-2024/yoke-antigravity/releases) |
 
@@ -69,8 +66,8 @@ Yoke Antigravity connects directly to the Antigravity editor's internal systems,
 
 ## 📦 Installation
 
-### From VS Code Marketplace (Recommended)
-Search for **"Yoke AntiGravity"** in VS Code Extensions, or [click here to install](https://marketplace.visualstudio.com/items?itemName=ai-dev-2024.yoke-antigravity).
+### From Open VSX (Recommended)
+Search for **"Yoke AntiGravity"** in Antigravity Extensions, or [click here to install](https://open-vsx.org/extension/ai-dev-2024/yoke-antigravity).
 
 ### From VSIX
 1. Download the latest `.vsix` from [Releases](https://github.com/ai-dev-2024/yoke-antigravity/releases)
@@ -140,11 +137,7 @@ src/
 
 ---
 
-## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=ai-dev-2024/yoke-antigravity&type=Date)](https://star-history.com/#ai-dev-2024/yoke-antigravity&Date)
-
----
 
 ## 🤝 Contributing
 
