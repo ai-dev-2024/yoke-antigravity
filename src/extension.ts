@@ -140,8 +140,8 @@ async function syncCDPSession(): Promise<void> {
             isPro: true,
             isBackgroundMode: config.get('multiTabEnabled'),
             pollInterval: config.get('pollFrequency'),
-            ide: currentIDE,
-            bannedCommands: []
+            ide: currentIDE.toLowerCase(), // CRITICAL: Must be lowercase like original extension
+            bannedCommands: config.get('bannedCommands') // Use actual banned commands from config
         });
     } catch (err) {
         log.warn(`CDP sync error: ${(err as Error).message}`);
