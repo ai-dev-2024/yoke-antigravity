@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.1] - 2024-12-30
+
+### Fixed
+- **CDP Auto-Prompt**: Now automatically prompts for relaunch when Auto-All is enabled but CDP is not available (previously silent)
+- Users will see "Setup & Restart" dialog on first use to enable auto-accept
+
+---
+
 ## [3.0.0] - 2024-12-30 🚀 Major Feature Release
 
 ### 🆕 New Features (9 Modules Added)
