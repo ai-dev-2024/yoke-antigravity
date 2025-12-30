@@ -243,7 +243,7 @@ export class VoiceController {
             // This is a placeholder for the integration point
 
         } catch (error) {
-            log.error('Failed to start voice listening', error);
+            log.error('Failed to start voice listening', { error: (error as Error).message });
             this.isListening = false;
         }
     }
@@ -340,7 +340,7 @@ export class VoiceController {
     // ============ Configuration ============
     setConfig(config: Partial<VoiceConfig>): void {
         this.config = { ...this.config, ...config };
-        log.info('Voice config updated', this.config);
+        log.info('Voice config updated', { config: this.config as unknown as Record<string, unknown> });
     }
 
     getConfig(): VoiceConfig {

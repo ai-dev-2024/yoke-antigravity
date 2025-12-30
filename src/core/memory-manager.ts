@@ -262,7 +262,7 @@ export class MemoryManager {
             this.saveIndex();
             log.debug(`Saved session: ${session.sessionId}`);
         } catch (error) {
-            log.error('Failed to save session', error);
+            log.error('Failed to save session', { error: (error as Error).message });
         }
     }
 
@@ -281,7 +281,7 @@ export class MemoryManager {
                 return JSON.parse(content) as SessionMemory;
             });
         } catch (error) {
-            log.error('Failed to load sessions', error);
+            log.error('Failed to load sessions', { error: (error as Error).message });
             return [];
         }
     }
@@ -295,7 +295,7 @@ export class MemoryManager {
                 const data = JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
                 this.memoryIndex = new Map(Object.entries(data));
             } catch (error) {
-                log.warn('Failed to load memory index', error);
+                log.warn('Failed to load memory index', { error: (error as Error).message });
             }
         }
     }
@@ -308,7 +308,7 @@ export class MemoryManager {
             const data = Object.fromEntries(this.memoryIndex);
             fs.writeFileSync(indexPath, JSON.stringify(data));
         } catch (error) {
-            log.warn('Failed to save memory index', error);
+            log.warn('Failed to save memory index', { error: (error as Error).message });
         }
     }
 
@@ -412,7 +412,7 @@ export class MemoryManager {
                 }
             }
         } catch (error) {
-            log.error('Cleanup failed', error);
+            log.error('Cleanup failed', { error: (error as Error).message });
         }
     }
 

@@ -49,6 +49,14 @@ class ConfigurationManager {
             executionTimeout: this.get('executionTimeout'),
             maxCallsPerHour: this.get('maxCallsPerHour'),
             maxConsecutiveTestLoops: this.get('maxConsecutiveTestLoops'),
+            // v3.0 features
+            mcpEnabled: this.get('mcpEnabled'),
+            memoryEnabled: this.get('memoryEnabled'),
+            codeReviewEnabled: this.get('codeReviewEnabled'),
+            voiceControlEnabled: this.get('voiceControlEnabled'),
+            notificationsEnabled: this.get('notificationsEnabled'),
+            multiAgentEnabled: this.get('multiAgentEnabled'),
+            autoTestGeneration: this.get('autoTestGeneration'),
         };
     }
 

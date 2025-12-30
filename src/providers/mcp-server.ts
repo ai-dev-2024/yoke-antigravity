@@ -233,7 +233,7 @@ export class MCPServer {
             log.debug(`Tool result: ${call.name}`, { success: !result.isError });
             return result;
         } catch (error) {
-            log.error(`Tool error: ${call.name}`, error);
+            log.error(`Tool error: ${call.name}`, { error: (error as Error).message });
             return {
                 content: [{ type: 'text', text: `Error: ${(error as Error).message}` }],
                 isError: true

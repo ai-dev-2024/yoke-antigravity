@@ -78,7 +78,7 @@ export class ProjectManager {
                 this.config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
                 log.info('Project manager config loaded');
             } catch (error) {
-                log.warn('Failed to load project config', error);
+                log.warn('Failed to load project config', { error: (error as Error).message });
             }
         }
     }
@@ -191,7 +191,7 @@ export class ProjectManager {
                 updatedAt: Date.now()
             }));
         } catch (error) {
-            log.error('Failed to fetch GitHub issues', error);
+            log.error('Failed to fetch GitHub issues', { error: (error as Error).message });
             return [];
         }
     }
@@ -230,7 +230,7 @@ export class ProjectManager {
             log.info(`Created GitHub issue #${issue.number}`);
             return issue.html_url;
         } catch (error) {
-            log.error('Failed to create GitHub issue', error);
+            log.error('Failed to create GitHub issue', { error: (error as Error).message });
             return null;
         }
     }
@@ -267,7 +267,7 @@ export class ProjectManager {
             log.info(`Created PR #${result.number}`);
             return result.html_url;
         } catch (error) {
-            log.error('Failed to create PR', error);
+            log.error('Failed to create PR', { error: (error as Error).message });
             return null;
         }
     }
@@ -328,7 +328,7 @@ export class ProjectManager {
                 updatedAt: Date.now()
             }));
         } catch (error) {
-            log.error('Failed to fetch Jira issues', error);
+            log.error('Failed to fetch Jira issues', { error: (error as Error).message });
             return [];
         }
     }

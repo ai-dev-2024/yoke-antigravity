@@ -251,7 +251,7 @@ export class AgentOrchestrator {
             task.result = (error as Error).message;
             task.completedAt = Date.now();
 
-            log.error(`Task ${task.id} failed`, error);
+            log.error(`Task ${task.id} failed`, { error: (error as Error).message });
         } finally {
             this.runningTasks.delete(task.id);
             this.processQueue();
@@ -376,7 +376,7 @@ Provide a clear, actionable response.
     // ============ Configuration ============
     setConfig(config: Partial<OrchestratorConfig>): void {
         this.config = { ...this.config, ...config };
-        log.info('Orchestrator config updated', this.config);
+        log.info('Orchestrator config updated', { config: this.config as unknown as Record<string, unknown> });
     }
 
     addCustomAgent(agent: AgentDefinition): void {

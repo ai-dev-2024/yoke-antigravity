@@ -469,7 +469,7 @@ export class TestGenerator {
                 statements: total.statements.pct
             };
         } catch (error) {
-            log.error('Failed to parse coverage', error);
+            log.error('Failed to parse coverage', { error: (error as Error).message });
             return null;
         }
     }
@@ -487,7 +487,7 @@ export class TestGenerator {
     // ============ Configuration ============
     setConfig(config: Partial<TestGeneratorConfig>): void {
         this.config = { ...this.config, ...config };
-        log.info('Test generator config updated', this.config);
+        log.info('Test generator config updated', { config: this.config as unknown as Record<string, unknown> });
     }
 
     getConfig(): TestGeneratorConfig {

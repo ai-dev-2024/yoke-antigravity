@@ -99,6 +99,14 @@ export const DEFAULT_CONFIG: YokeConfig = {
     executionTimeout: 15,
     maxCallsPerHour: 100,
     maxConsecutiveTestLoops: 3,
+    // v3.0 feature defaults
+    mcpEnabled: false,
+    memoryEnabled: true,
+    codeReviewEnabled: true,
+    voiceControlEnabled: false,
+    notificationsEnabled: true,
+    multiAgentEnabled: false,
+    autoTestGeneration: false,
 };
 
 // ============ Usage Data ============
