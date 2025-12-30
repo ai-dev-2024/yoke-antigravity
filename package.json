@@ -2,7 +2,7 @@
     "name": "yoke-antigravity",
     "displayName": "Yoke AntiGravity",
     "description": "Auto-accept file edits and terminal commands in Antigravity. Zero-click AI coding with Auto-All, Multi-Tab, and Autonomous Mode.",
-    "version": "2.12.0",
+    "version": "2.13.0",
     "publisher": "ai-dev-2024",
     "license": "MIT",
     "icon": "media/icon.png",
