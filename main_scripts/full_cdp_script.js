@@ -5,7 +5,7 @@
     if (typeof window === 'undefined') return;
 
     const Analytics = (function () {
-        
+
         const TERMINAL_KEYWORDS = ['run', 'execute', 'command', 'terminal'];
         const SECONDS_PER_CLICK = 5;
         const TIME_VARIANCE = 0.2;
@@ -120,7 +120,7 @@
         function initializeFocusState(log) {
             const state = window.__autoAllState;
             if (state && state.stats) {
-                
+
                 state.stats.isWindowFocused = true;
                 log('[Focus] Initialized (awaiting extension sync)');
             }
@@ -188,7 +188,7 @@
     })();
 
     const log = (msg, isSuccess = false) => {
-        
+
         console.log(`[autoAll] ${msg}`);
     };
 
@@ -237,7 +237,7 @@
                 timerCallbacks.set(id, resolve);
                 worker.postMessage({ id: id, ms: ms });
             } else {
-                
+
                 setTimeout(resolve, ms);
             }
         });
@@ -410,7 +410,7 @@
         });
 
         newNames.forEach(name => {
-            const status = state.completionStatus[name]; 
+            const status = state.completionStatus[name];
             const isDone = status === 'done';
 
             const statusClass = isDone ? 'done' : 'working';
@@ -450,7 +450,7 @@
                 container.appendChild(slot);
                 log(`[Overlay] Created slot: ${name} (${statusText})`);
             } else {
-                
+
                 slot.className = `aab-slot ${statusClass}`;
 
                 const statusSpan = slot.querySelector('.status-text');
@@ -477,15 +477,15 @@
 
         let container = el.parentElement;
         let depth = 0;
-        const maxDepth = 10; 
+        const maxDepth = 10;
 
         while (container && depth < maxDepth) {
-            
+
             let sibling = container.previousElementSibling;
             let siblingCount = 0;
 
             while (sibling && siblingCount < 5) {
-                
+
                 if (sibling.tagName === 'PRE' || sibling.tagName === 'CODE') {
                     const text = sibling.textContent.trim();
                     if (text.length > 0) {
@@ -564,12 +564,12 @@
             if (!pattern || pattern.length === 0) continue;
 
             try {
-                
+
                 if (pattern.startsWith('/') && pattern.lastIndexOf('/') > 0) {
-                    
+
                     const lastSlash = pattern.lastIndexOf('/');
                     const regexPattern = pattern.substring(1, lastSlash);
-                    const flags = pattern.substring(lastSlash + 1) || 'i'; 
+                    const flags = pattern.substring(lastSlash + 1) || 'i';
 
                     const regex = new RegExp(regexPattern, flags);
                     if (regex.test(commandText)) {
@@ -578,7 +578,7 @@
                         return true;
                     }
                 } else {
-                    
+
                     const lowerPattern = pattern.toLowerCase();
                     if (lowerText.includes(lowerPattern)) {
                         log(`[BANNED] Command blocked by pattern: "${pattern}"`);
@@ -587,7 +587,7 @@
                     }
                 }
             } catch (e) {
-                
+
                 log(`[BANNED] Invalid regex pattern "${pattern}", using literal match: ${e.message}`);
                 if (lowerText.includes(pattern.toLowerCase())) {
                     log(`[BANNED] Command blocked by pattern (fallback): "${pattern}"`);
@@ -641,7 +641,7 @@
                     requestAnimationFrame(check);
                 }
             };
-            
+
             setTimeout(check, 50);
         });
     }
@@ -664,7 +664,7 @@
                 const disappeared = await waitForDisappear(el);
 
                 if (disappeared) {
-                    
+
                     Analytics.trackClick(buttonText, log);
                     verified++;
                     log(`[Stats] Click verified (button disappeared)`);
@@ -697,7 +697,7 @@
                 '#workbench\\.parts\\.auxiliarybar ul[role="tablist"] li[role="tab"]',
                 '.monaco-pane-view .monaco-list-row[role="listitem"]',
                 'div[role="tablist"] div[role="tab"]',
-                '.chat-session-item' 
+                '.chat-session-item'
             ];
 
             let tabs = [];
@@ -776,7 +776,7 @@
                         log(`[Loop] Cycle ${cycle}: Tab "${tabName}" marked as DONE`);
                     }
                 } else {
-                    
+
                     index++;
                     log(`[Loop] Cycle ${cycle}: Skipping completed tab "${tabName}"`);
                 }
@@ -864,21 +864,25 @@
 
             if (isBG && isPro) {
                 log(`[BG] Starting background loop (no overlay)...`);
-                
+
                 log(`[BG] Starting ${ide} loop...`);
                 if (ide === 'cursor') cursorLoop(sid);
                 else antigravityLoop(sid);
             } else if (isBG && !isPro) {
                 log(`[BG] Background mode without Pro...`);
-                
+
                 if (ide === 'cursor') cursorLoop(sid);
                 else antigravityLoop(sid);
             } else {
                 hideOverlay();
-                log(`Starting static poll loop...`);
+                log(`Starting static poll loop for ${ide}...`);
+                // Use IDE-specific selectors - Antigravity uses .bg-ide-button-background for accept buttons
+                const selectors = ide === 'antigravity'
+                    ? ['.bg-ide-button-background', 'button', '[class*="button"]']
+                    : ['button', '[class*="button"]', '[class*="anysphere"]'];
                 (async function staticLoop() {
                     while (state.isRunning && state.sessionID === sid) {
-                        performClick(['button', '[class*="button"]', '[class*="anysphere"]']);
+                        performClick(selectors);
                         await workerDelay(config.pollInterval || 1000);
                     }
                 })();

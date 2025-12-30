@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.15.0] - 2024-12-30
+
+### Fixed
+- **CRITICAL: Auto-Accept Not Working in Non-Background Mode**: The static poll loop was using generic selectors that missed Antigravity's `.bg-ide-button-background` accept buttons. Now uses IDE-specific selectors.
+
+### Changed
+- **Simplified Status Bar**: Removed clutter (Auto-All, Multi-Tab items). Now shows single toggle + settings gear.
+- Removed VS Code Marketplace references (Open VSX only)
+
+---
+
 ## [2.14.0] - 2024-12-30
 
 ### Added
