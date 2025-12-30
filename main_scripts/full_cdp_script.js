@@ -602,8 +602,11 @@
     function isAcceptButton(el) {
         const text = (el.textContent || "").trim().toLowerCase();
         if (text.length === 0 || text.length > 50) return false;
-        const patterns = ['accept', 'run', 'retry', 'apply', 'execute', 'confirm', 'allow once', 'allow'];
-        const rejects = ['skip', 'reject', 'cancel', 'close', 'refine'];
+
+        // Extended accept patterns - including keyboard shortcuts like "accept all+d"
+        const patterns = ['accept', 'run', 'retry', 'apply', 'execute', 'confirm', 'allow once', 'allow', 'proceed'];
+        const rejects = ['skip', 'reject', 'cancel', 'close', 'refine', 'undo'];
+
         if (rejects.some(r => text.includes(r))) return false;
         if (!patterns.some(p => text.includes(p))) return false;
 
@@ -739,11 +742,22 @@
         let index = 0;
         let cycle = 0;
 
+        // Extended selectors for Antigravity - catch ALL possible accept buttons
+        const selectors = [
+            '.bg-ide-button-background',           // Primary Antigravity accept buttons
+            'button[class*="accept"]',              // Any button with accept in class
+            'button[class*="run"]',                 // Run buttons  
+            '[role="button"][class*="bg-"]',        // Role buttons with bg- classes
+            '[class*="ide-button"]',                // Any IDE button variant
+            'button',                               // Generic buttons (filtered by isAcceptButton)
+            '[class*="button"]'                     // Any element with button class
+        ];
+
         while (window.__autoAllState.isRunning && window.__autoAllState.sessionID === sid) {
             cycle++;
             log(`[Loop] Cycle ${cycle}: Starting...`);
 
-            const clicked = await performClick(['.bg-ide-button-background']);
+            const clicked = await performClick(selectors);
             if (clicked > 0) {
                 log(`[Loop] Cycle ${cycle}: Clicked ${clicked} accept buttons`);
             }

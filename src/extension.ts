@@ -13,6 +13,16 @@ import { createLogger } from './utils/logger';
 import { autonomousLoop } from './core/autonomous-loop';
 import { circuitBreaker } from './core/circuit-breaker';
 import { progressTracker } from './core/progress-tracker';
+// New feature imports
+import { mcpServer } from './providers/mcp-server';
+import { memoryManager } from './core/memory-manager';
+import { codeReviewer } from './core/code-reviewer';
+import { projectManager } from './providers/project-manager';
+import { voiceController } from './ui/voice-controller';
+import { agentOrchestrator } from './core/agent-orchestrator';
+import { testGenerator } from './core/test-generator';
+import { modelProviderManager } from './providers/model-provider';
+import { notificationManager } from './core/notification-manager';
 
 const log = createLogger('Extension');
 
@@ -164,12 +174,281 @@ async function stopPolling(): Promise<void> {
 // ============ Commands ============
 function registerCommands(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
+        // Core commands
+        vscode.commands.registerCommand('yoke.toggleExtension', toggleExtension),
         vscode.commands.registerCommand('yoke.toggleAutoAll', toggleAutoAll),
         vscode.commands.registerCommand('yoke.toggleMultiTab', toggleMultiTab),
         vscode.commands.registerCommand('yoke.toggleYokeMode', toggleYokeMode),
         vscode.commands.registerCommand('yoke.openSettings', () => openDashboard(context)),
-        vscode.commands.registerCommand('yoke.resetCircuitBreaker', resetCircuitBreaker)
+        vscode.commands.registerCommand('yoke.resetCircuitBreaker', resetCircuitBreaker),
+        // New feature commands
+        vscode.commands.registerCommand('yoke.toggleMcp', toggleMcp),
+        vscode.commands.registerCommand('yoke.toggleVoice', toggleVoice),
+        vscode.commands.registerCommand('yoke.generateTests', generateTests),
+        vscode.commands.registerCommand('yoke.runCodeReview', runCodeReview),
+        vscode.commands.registerCommand('yoke.startMultiAgent', startMultiAgent),
+        vscode.commands.registerCommand('yoke.showMemory', showMemory),
+        vscode.commands.registerCommand('yoke.syncProjectTasks', syncProjectTasks)
     );
+}
+
+// ============ New Feature Commands ============
+async function toggleMcp(): Promise<void> {
+    const current = config.get('mcpEnabled');
+    await config.set('mcpEnabled', !current);
+
+    if (!current) {
+        log.info('MCP Server enabled');
+        vscode.window.showInformationMessage('✅ MCP Server: ON - AI tools now available');
+    } else {
+        log.info('MCP Server disabled');
+        vscode.window.showInformationMessage('⏸️ MCP Server: OFF');
+    }
+}
+
+async function toggleVoice(): Promise<void> {
+    const current = config.get('voiceControlEnabled');
+    await config.set('voiceControlEnabled', !current);
+
+    if (!current) {
+        voiceController.setConfig({ enabled: true });
+        await voiceController.startListening();
+        vscode.window.showInformationMessage('🎤 Voice Control: ON');
+    } else {
+        voiceController.setConfig({ enabled: false });
+        await voiceController.stopListening();
+        vscode.window.showInformationMessage('🔇 Voice Control: OFF');
+    }
+}
+
+async function generateTests(): Promise<void> {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        vscode.window.showWarningMessage('No file open to generate tests for');
+        return;
+    }
+
+    const filePath = vscode.workspace.asRelativePath(editor.document.uri);
+    vscode.window.showInformationMessage(`🧪 Generating tests for ${filePath}...`);
+
+    try {
+        const suite = await testGenerator.generateTestsForFile(filePath);
+        vscode.window.showInformationMessage(
+            `✅ Generated ${suite.tests.length} tests in ${suite.tests[0]?.testFile || 'tests/'}`,
+            'Open Tests'
+        ).then(action => {
+            if (action === 'Open Tests' && suite.tests[0]?.testFile) {
+                const testUri = vscode.Uri.file(path.join(
+                    vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '',
+                    suite.tests[0].testFile
+                ));
+                vscode.window.showTextDocument(testUri);
+            }
+        });
+    } catch (error) {
+        vscode.window.showErrorMessage(`Test generation failed: ${(error as Error).message}`);
+    }
+}
+
+async function runCodeReview(): Promise<void> {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        vscode.window.showWarningMessage('No file open to review');
+        return;
+    }
+
+    const code = editor.document.getText();
+    const filename = path.basename(editor.document.fileName);
+
+    vscode.window.showInformationMessage(`🔍 Reviewing ${filename}...`);
+
+    const result = codeReviewer.review(code, filename);
+
+    // Show diagnostics in VS Code
+    const diagnostics = codeReviewer.showDiagnostics(editor.document, result.issues);
+    const collection = vscode.languages.createDiagnosticCollection('yoke-review');
+    collection.set(editor.document.uri, diagnostics);
+
+    vscode.window.showInformationMessage(result.summary, 'View Details').then(action => {
+        if (action === 'View Details') {
+            const panel = vscode.window.createWebviewPanel(
+                'yokeCodeReview',
+                `Code Review: ${filename}`,
+                vscode.ViewColumn.Two,
+                {}
+            );
+            panel.webview.html = generateReviewHtml(result);
+        }
+    });
+}
+
+function generateReviewHtml(result: import('./core/code-reviewer').ReviewResult): string {
+    const issueRows = result.issues.map(i => `
+        <tr>
+            <td>${i.severity}</td>
+            <td>${i.type}</td>
+            <td>${i.line || '-'}</td>
+            <td>${i.message}</td>
+            <td><code>${i.rule}</code></td>
+        </tr>
+    `).join('');
+
+    return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body { font-family: system-ui; padding: 20px; background: #1e1e1e; color: #d4d4d4; }
+                h1 { color: ${result.passed ? '#4ade80' : '#f87171'}; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { padding: 8px; text-align: left; border-bottom: 1px solid #333; }
+                th { background: #2d2d2d; }
+                .score { font-size: 2em; color: ${result.score >= 80 ? '#4ade80' : result.score >= 50 ? '#facc15' : '#f87171'}; }
+            </style>
+        </head>
+        <body>
+            <h1>${result.passed ? '✅ Review Passed' : '❌ Issues Found'}</h1>
+            <p class="score">Score: ${result.score}/100</p>
+            <table>
+                <tr><th>Severity</th><th>Type</th><th>Line</th><th>Message</th><th>Rule</th></tr>
+                ${issueRows || '<tr><td colspan="5">No issues found!</td></tr>'}
+            </table>
+        </body>
+        </html>
+    `;
+}
+
+async function startMultiAgent(): Promise<void> {
+    const task = await vscode.window.showInputBox({
+        prompt: 'Describe the task for multi-agent collaboration',
+        placeHolder: 'e.g., Implement user authentication with OAuth2'
+    });
+
+    if (!task) return;
+
+    await config.set('multiAgentEnabled', true);
+    vscode.window.showInformationMessage(`🤖 Starting multi-agent task: ${task.substring(0, 50)}...`);
+
+    try {
+        await agentOrchestrator.coordinateAgents(task);
+        vscode.window.showInformationMessage('✅ Multi-agent task initiated');
+    } catch (error) {
+        vscode.window.showErrorMessage(`Multi-agent error: ${(error as Error).message}`);
+    }
+}
+
+async function showMemory(): Promise<void> {
+    const stats = memoryManager.getStats();
+    const recent = memoryManager.getRecentMemories(10);
+
+    const panel = vscode.window.createWebviewPanel(
+        'yokeMemory',
+        'Yoke Session Memory',
+        vscode.ViewColumn.Two,
+        {}
+    );
+
+    const memoryRows = recent.map(m => `
+        <tr>
+            <td>${new Date(m.timestamp).toLocaleTimeString()}</td>
+            <td>${m.type}</td>
+            <td>${m.content.substring(0, 100)}...</td>
+        </tr>
+    `).join('');
+
+    panel.webview.html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body { font-family: system-ui; padding: 20px; background: #1e1e1e; color: #d4d4d4; }
+                h1 { color: #7c3aed; }
+                .stat { display: inline-block; margin: 10px; padding: 15px; background: #2d2d2d; border-radius: 8px; }
+                .stat-value { font-size: 2em; color: #4ade80; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { padding: 8px; text-align: left; border-bottom: 1px solid #333; }
+            </style>
+        </head>
+        <body>
+            <h1>🧠 Session Memory</h1>
+            <div>
+                <div class="stat"><div class="stat-value">${stats.currentEntries}</div>Current Entries</div>
+                <div class="stat"><div class="stat-value">${stats.totalSessions}</div>Total Sessions</div>
+                <div class="stat"><div class="stat-value">${stats.indexedTerms}</div>Indexed Terms</div>
+            </div>
+            <h2>Recent Memories</h2>
+            <table>
+                <tr><th>Time</th><th>Type</th><th>Content</th></tr>
+                ${memoryRows || '<tr><td colspan="3">No memories yet</td></tr>'}
+            </table>
+        </body>
+        </html>
+    `;
+}
+
+async function syncProjectTasks(): Promise<void> {
+    const configured = projectManager.isConfigured();
+
+    if (!configured.github && !configured.jira) {
+        const config = await vscode.window.showQuickPick(
+            ['Configure GitHub', 'Configure Jira', 'Use Local @fix_plan.md'],
+            { placeHolder: 'Select project management integration' }
+        );
+
+        if (config === 'Use Local @fix_plan.md') {
+            const tasks = await projectManager.syncFromFixPlan();
+            vscode.window.showInformationMessage(`📋 Synced ${tasks.length} tasks from @fix_plan.md`);
+            return;
+        }
+
+        vscode.window.showInformationMessage('Configure integration in .yoke/project-manager.json');
+        return;
+    }
+
+    vscode.window.showInformationMessage('📋 Syncing project tasks...');
+
+    try {
+        const tasks = [];
+        if (configured.github) {
+            tasks.push(...await projectManager.fetchGitHubIssues());
+        }
+        if (configured.jira) {
+            tasks.push(...await projectManager.fetchJiraIssues());
+        }
+
+        await projectManager.updateFixPlan(tasks);
+        vscode.window.showInformationMessage(`✅ Synced ${tasks.length} tasks`);
+    } catch (error) {
+        vscode.window.showErrorMessage(`Sync failed: ${(error as Error).message}`);
+    }
+}
+
+// ============ Extension Toggle (Universal ON/OFF) ============
+async function toggleExtension(): Promise<void> {
+    const current = config.get('autoAllEnabled');
+
+    if (current) {
+        // Turning OFF - disable everything
+        log.info('Yoke: Turning OFF');
+        await config.set('autoAllEnabled', false);
+        await stopPolling();
+
+        // Also stop autonomous mode if running
+        if (autonomousLoop.isRunning()) {
+            autonomousLoop.stop('Extension disabled');
+            await config.set('yokeModeEnabled', false);
+        }
+
+        vscode.window.showInformationMessage('⏸️ Yoke: OFF');
+    } else {
+        // Turning ON - enable auto-all
+        log.info('Yoke: Turning ON');
+        await config.set('autoAllEnabled', true);
+        vscode.window.showInformationMessage('✅ Yoke: ON');
+        ensureCDPOrPrompt(true).then(() => startPolling());
+    }
+
+    updateStatusBar();
 }
 
 // ============ Toggle Functions (SAME FLOW AS OLD EXTENSION) ============

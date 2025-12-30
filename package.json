@@ -2,7 +2,7 @@
     "name": "yoke-antigravity",
     "displayName": "Yoke AntiGravity",
     "description": "Auto-accept file edits and terminal commands in Antigravity. Zero-click AI coding with Auto-All, Multi-Tab, and Autonomous Mode.",
-    "version": "2.15.0",
+    "version": "3.0.0",
     "publisher": "ai-dev-2024",
     "license": "MIT",
     "icon": "media/icon.png",
@@ -45,6 +45,10 @@
     "contributes": {
         "commands": [
             {
+                "command": "yoke.toggleExtension",
+                "title": "Yoke: Toggle Extension ON/OFF"
+            },
+            {
                 "command": "yoke.toggleAutoAll",
                 "title": "Yoke: Toggle Auto-All Mode"
             },
@@ -59,6 +63,34 @@
             {
                 "command": "yoke.openSettings",
                 "title": "Yoke: Open Dashboard"
+            },
+            {
+                "command": "yoke.toggleMcp",
+                "title": "Yoke: Toggle MCP Server"
+            },
+            {
+                "command": "yoke.toggleVoice",
+                "title": "Yoke: Toggle Voice Control"
+            },
+            {
+                "command": "yoke.generateTests",
+                "title": "Yoke: Generate Tests for Current File"
+            },
+            {
+                "command": "yoke.runCodeReview",
+                "title": "Yoke: Run Code Review"
+            },
+            {
+                "command": "yoke.startMultiAgent",
+                "title": "Yoke: Start Multi-Agent Task"
+            },
+            {
+                "command": "yoke.showMemory",
+                "title": "Yoke: Show Session Memory"
+            },
+            {
+                "command": "yoke.syncProjectTasks",
+                "title": "Yoke: Sync Project Tasks (Jira/GitHub)"
             }
         ],
         "configuration": {

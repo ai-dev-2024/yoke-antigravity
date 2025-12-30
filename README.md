@@ -59,6 +59,44 @@ Yoke Antigravity connects directly to the Antigravity editor's internal systems,
 - ⚡ **Speed** with Gemini 3 Flash
 - 🛑 Circuit breaker & recovery strategies
 
+### 🆕 v3.0 Features
+
+#### 🔌 MCP Server Integration
+- 10 AI-callable tools for file ops, terminal, git, and diagnostics
+- Model Context Protocol for seamless AI tool communication
+
+#### 🧠 Persistent Session Memory
+- Context tracking across sessions
+- Semantic search and automatic summarization
+
+#### 🔍 AI Code Review
+- 15+ security patterns (SQL injection, XSS, hardcoded secrets)
+- VS Code diagnostics integration
+
+#### 📋 Project Management
+- Jira & GitHub Issues sync
+- @fix_plan.md automation
+
+#### 🎤 Voice Control
+- Natural language commands
+- VS Code Speech API integration
+
+#### 🤖 Multi-Agent Orchestration
+- 5 specialized agents (Researcher, Implementer, Reviewer, Tester, Planner)
+- Parallel task execution
+
+#### 🧪 Autonomous Test Generator
+- Vitest, Jest, Mocha support
+- Edge case detection
+
+#### 🔧 Custom Model Providers
+- BYOM: Anthropic, Google, OpenAI, Ollama
+- Cost tracking per model
+
+#### 📢 Smart Notifications
+- Slack, Discord, webhook integrations
+- Daily summaries
+
 ### 📊 Settings Dashboard
 **Full control.** Visual configuration panel to toggle features, set model preferences, and view session stats.
 
@@ -101,6 +139,15 @@ Access via `Yoke: Open Dashboard` in the Command Palette.
 - View real-time session statistics
 - Manage banned commands
 
+### New Commands
+- `Yoke: Toggle MCP Server` — Enable MCP tools for AI
+- `Yoke: Toggle Voice Control` — Voice command support
+- `Yoke: Generate Tests` — Auto-generate tests for current file
+- `Yoke: Run Code Review` — Security & quality scan
+- `Yoke: Start Multi-Agent Task` — Parallel agent collaboration
+- `Yoke: Show Session Memory` — View memory context
+- `Yoke: Sync Project Tasks` — Jira/GitHub sync
+
 ---
 
 ## 🏗️ Architecture
@@ -111,13 +158,22 @@ src/
 │   ├── autonomous-loop.ts    # Main autonomous loop
 │   ├── circuit-breaker.ts    # Safety mechanism
 │   ├── model-selector.ts     # Intelligent routing
-│   └── task-analyzer.ts      # Context awareness
+│   ├── task-analyzer.ts      # Context awareness
+│   ├── memory-manager.ts     # 🆕 Session memory
+│   ├── code-reviewer.ts      # 🆕 Security scanner
+│   ├── agent-orchestrator.ts # 🆕 Multi-agent system
+│   ├── test-generator.ts     # 🆕 Auto test gen
+│   └── notification-manager.ts # 🆕 Smart alerts
 ├── providers/          # External integrations
 │   ├── cdp-client.ts         # Chrome DevTools Protocol
-│   └── antigravity-usage.ts  # Usage scraping
+│   ├── antigravity-usage.ts  # Usage scraping
+│   ├── mcp-server.ts         # 🆕 MCP integration
+│   ├── project-manager.ts    # 🆕 Jira/GitHub
+│   └── model-provider.ts     # 🆕 BYOM support
 ├── ui/                 # User interface
-│   ├── dashboard.ts          # key webviews
-│   └── status-bar.ts         # extensive status bar controls
+│   ├── dashboard.ts          # Webview panels
+│   ├── status-bar.ts         # Status bar controls
+│   └── voice-controller.ts   # 🆕 Voice commands
 └── main_scripts/       # Injection scripts
     ├── cdp-handler.js        # Core auto-accept logic
     └── full_cdp_script.js    # Browser injection

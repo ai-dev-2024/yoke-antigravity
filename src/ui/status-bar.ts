@@ -27,7 +27,7 @@ export class StatusBarManager {
             vscode.StatusBarAlignment.Left,
             101
         );
-        this.statusMain.command = 'yoke.toggleAutoAll';
+        this.statusMain.command = 'yoke.toggleExtension';
         context.subscriptions.push(this.statusMain);
 
         // Settings Gear

@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.0] - 2024-12-30 🚀 Major Feature Release
+
+### 🆕 New Features (9 Modules Added)
+
+#### 🔴 P0 — Near-Term Priority
+- **MCP Server Integration**: Model Context Protocol with 10 AI-callable tools for file operations, terminal commands, workspace info, diagnostics, and git
+- **Persistent Session Memory**: Context tracking across sessions with semantic search and automatic summarization
+- **AI Code Review**: Security scanning with 15+ vulnerability patterns (SQL injection, XSS, hardcoded secrets, etc.) and VS Code diagnostics integration
+- **Project Management Integration**: Jira & GitHub Issues sync, @fix_plan.md automation, branch and PR generation
+
+#### 🟡 P1/P2 — Medium-Term Priority
+- **Voice Control**: Natural language commands ("Yoke start autonomous", "switch to Claude") with VS Code Speech API integration
+- **Multi-Agent Orchestration**: 5 specialized agents (Researcher, Implementer, Reviewer, Tester, Planner) with parallel task execution
+
+#### 🟢 P3 — Experimental
+- **Autonomous Test Generator**: Multi-framework support (Vitest, Jest, Mocha), edge case detection, coverage parsing
+- **Custom Model Provider**: BYOM support for Anthropic, Google, OpenAI, Ollama with unified API and cost tracking
+- **Smart Notifications**: Slack, Discord, webhook integrations with quiet hours and daily summaries
+
+### 📦 New Commands
+- `yoke.toggleMcp` — Toggle MCP Server
+- `yoke.toggleVoice` — Toggle Voice Control
+- `yoke.generateTests` — Generate Tests for Current File
+- `yoke.runCodeReview` — Run Code Review
+- `yoke.startMultiAgent` — Start Multi-Agent Task
+- `yoke.showMemory` — Show Session Memory
+- `yoke.syncProjectTasks` — Sync Project Tasks (Jira/GitHub)
+
+### ⚙️ New Configuration Settings
+- `yoke.mcpEnabled` — MCP server toggle
+- `yoke.memoryEnabled` — Persistent memory toggle
+- `yoke.codeReviewEnabled` — Code review toggle
+- `yoke.voiceControlEnabled` — Voice control toggle
+- `yoke.notificationsEnabled` — Notifications toggle
+- `yoke.multiAgentEnabled` — Multi-agent toggle
+- `yoke.autoTestGeneration` — Auto test generation toggle
+
+### 📊 Technical
+- Bundle size: 293.6kb (up from 221.9kb)
+- ~3,550 lines of new code across 9 modules
+- Full TypeScript strict mode compliance
+
+---
+
 ## [2.15.0] - 2024-12-30
 
 ### Fixed

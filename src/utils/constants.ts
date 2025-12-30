@@ -73,6 +73,14 @@ export interface YokeConfig {
     executionTimeout: number;
     maxCallsPerHour: number;
     maxConsecutiveTestLoops: number;
+    // New feature flags
+    mcpEnabled: boolean;
+    memoryEnabled: boolean;
+    codeReviewEnabled: boolean;
+    voiceControlEnabled: boolean;
+    notificationsEnabled: boolean;
+    multiAgentEnabled: boolean;
+    autoTestGeneration: boolean;
 }
 
 export const DEFAULT_CONFIG: YokeConfig = {
