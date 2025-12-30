@@ -100,6 +100,11 @@ Yoke Antigravity connects directly to the Antigravity editor's internal systems,
 ### 📊 Settings Dashboard
 **Full control.** Visual configuration panel to toggle features, set model preferences, and view session stats.
 
+#### 🚀 Enable All Button (New!)
+- **One-click activation** of all 12 features
+- Enable All / Disable All buttons at the top of Features section
+- Auto-saves each toggle immediately
+
 ---
 
 ## 📦 Installation

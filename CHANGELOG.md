@@ -9,9 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.1] - 2024-12-30
 
+### Added
+- **Enable All / Disable All Buttons**: One-click batch toggling of all 12 features from the dashboard
+- All toggles now auto-save immediately (no need to click Save button)
+
 ### Fixed
-- **CDP Auto-Prompt**: Now automatically prompts for relaunch when Auto-All is enabled but CDP is not available (previously silent)
+- **CDP Auto-Prompt**: Now automatically prompts for relaunch when Auto-All is enabled but CDP is not available
 - Users will see "Setup & Restart" dialog on first use to enable auto-accept
+
+### Published
+- ✅ Open VSX: https://open-vsx.org/extension/ai-dev-2024/yoke-antigravity
+- ✅ GitHub: https://github.com/ai-dev-2024/yoke-antigravity/releases
 
 ---
 
