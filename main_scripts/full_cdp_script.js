@@ -734,6 +734,49 @@
         log('[Loop] cursorLoop STOPPED');
     }
 
+    /**
+     * Simulate keyboard shortcuts for auto-accept in AntiGravity
+     * Handles buttons that show "Accept Alt+d" or "Accept Alt+Enter" prompts
+     */
+    async function simulateAcceptShortcuts() {
+        try {
+            // Look for elements indicating pending actions that need keyboard acceptance
+            const pendingIndicators = queryAll('[class*="pending"], [class*="waiting"], [class*="action-required"]');
+            const acceptButtons = queryAll('button').filter(b => {
+                const text = (b.textContent || '').toLowerCase();
+                return text.includes('alt+') || text.includes('accept');
+            });
+
+            if (pendingIndicators.length > 0 || acceptButtons.length > 0) {
+                log(`[Keyboard] Found ${pendingIndicators.length} pending indicators, ${acceptButtons.length} accept buttons`);
+
+                // Simulate Alt+D (common accept shortcut)
+                document.dispatchEvent(new KeyboardEvent('keydown', {
+                    key: 'd',
+                    code: 'KeyD',
+                    altKey: true,
+                    bubbles: true,
+                    cancelable: true
+                }));
+
+                await workerDelay(100);
+
+                // Simulate Alt+Enter (alternative accept shortcut)
+                document.dispatchEvent(new KeyboardEvent('keydown', {
+                    key: 'Enter',
+                    code: 'Enter',
+                    altKey: true,
+                    bubbles: true,
+                    cancelable: true
+                }));
+
+                log('[Keyboard] Simulated Alt+D and Alt+Enter shortcuts');
+            }
+        } catch (e) {
+            log(`[Keyboard] Error simulating shortcuts: ${e.message}`);
+        }
+    }
+
     async function antigravityLoop(sid) {
         log('[Loop] antigravityLoop STARTED');
         let index = 0;
@@ -742,6 +785,10 @@
         while (window.__autoAllState.isRunning && window.__autoAllState.sessionID === sid) {
             cycle++;
             log(`[Loop] Cycle ${cycle}: Starting...`);
+
+            // First, try keyboard shortcuts (Alt+Enter, Alt+D) for auto-accept
+            // This handles cases where buttons show "Accept Alt+d" style prompts
+            await simulateAcceptShortcuts();
 
             // Use multiple selectors to catch all Accept/Run buttons in Antigravity
             const clicked = await performClick([
