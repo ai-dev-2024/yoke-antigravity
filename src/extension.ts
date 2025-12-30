@@ -99,7 +99,8 @@ export function activate(context: vscode.ExtensionContext): void {
 async function checkEnvironmentAndStart(): Promise<void> {
     if (config.get('autoAllEnabled')) {
         log.info('Initializing Yoke Auto-All environment...');
-        await ensureCDPOrPrompt(false); // Silent on startup
+        // AUTO-PROMPT for relaunch if CDP not available
+        await ensureCDPOrPrompt(true);
         await startPolling();
     }
     updateStatusBar();
@@ -118,7 +119,7 @@ async function ensureCDPOrPrompt(showPrompt: boolean): Promise<void> {
         log.info('CDP not found on expected ports (9000-9030).');
 
         if (showPrompt && relauncher) {
-            log.info('Prompting user for relaunch...');
+            log.info('Auto-prompting user for relaunch to enable CDP...');
             await relauncher.showRelaunchPrompt();
         } else {
             log.info('Skipping relaunch prompt. User can click status bar to trigger.');
